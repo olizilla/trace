@@ -1,0 +1,33 @@
+
+@import 'colors.css';
+@import 'basscss-basic';
+@import 'basscss-type-scale';
+@import 'basscss-typography';
+@import 'basscss-layout';
+@import 'basscss-align';
+@import 'basscss-margin';
+@import 'basscss-padding';
+@import 'basscss-grid';
+@import 'basscss-flexbox';
+@import 'basscss-position';
+@import 'basscss-border';
+@import 'basscss-hide';
+
+/* http://www.randoma11y.com/#/?_k=jszej0 */
+.navy-blue { color: #0675cc; }
+.white { color: #f5fbf9; }
+.bg-navy-blue { background-color: #0675cc; }
+.bg-white { background-color: #f5fbf9; }
+
+html, body {
+  height:100%;
+}
+.w100 {
+  width: 100%;
+}
+svg {
+  max-width:100%;
+}
+h1 {
+  bottom: 8px;
+}

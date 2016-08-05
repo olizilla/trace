@@ -1,3 +1,6 @@
+var fs = require('fs')
+const {dialog} = require('electron').remote
+
 // This file is required by the index.html file and will
 // be executed in the renderer process for that window.
 // All of the Node.js APIs are available in this process.
@@ -9,6 +12,7 @@ const conf = {
 }
 
 let currentFilePath = null
+let currentSvg = null
 let converting = false
 
 function convertToSvg (filepath) {
@@ -20,7 +24,8 @@ function convertToSvg (filepath) {
   Potrace.loadImage(filepath, function(err) {
     if (err) return console.error(err)
     Potrace.process(function(){
-      document.getElementById('svgs').innerHTML = Potrace.getSVG(SVG_SCALE)
+      currentSvg = Potrace.getSVG(SVG_SCALE)
+      document.getElementById('svgs').innerHTML = currentSvg
       console.log('redrawn')
       converting = false
     })
@@ -30,6 +35,10 @@ function convertToSvg (filepath) {
 function handleFileSelect (evt) {
   evt.stopPropagation()
   evt.preventDefault()
+  var help = document.querySelector('.help')
+  help.innerText = 'Export'
+  help.removeEventListener('click', saveFile)
+  help.addEventListener('click', saveFile)
   var files = evt.dataTransfer.files
   for (let f of files) {
     convertToSvg(f.path)
@@ -49,6 +58,15 @@ function changeConfig (evt) {
   conf[prop] = Number(value)
   if (!currentFilePath) return
   convertToSvg(currentFilePath)
+}
+
+function saveFile () {
+  dialog.showSaveDialog(function (fileName) {
+    if (fileName === undefined) return;
+    fs.writeFile(fileName, currentSvg, function (err) {
+      if (err) console.error(err)
+    })
+  })
 }
 
 // Setup the dnd listeners.

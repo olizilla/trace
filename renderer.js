@@ -1,5 +1,6 @@
 var fs = require('fs')
 const {dialog} = require('electron').remote
+const potrace = require('potrace')
 
 // This file is required by the index.html file and will
 // be executed in the renderer process for that window.
@@ -7,8 +8,8 @@ const {dialog} = require('electron').remote
 
 const SVG_SCALE = 1
 const conf = {
-  turdsize: document.getElementById('turdsize').value,
-  alphamax: document.getElementById('alphamax').value
+  turdSize: document.getElementById('turdSize').value,
+  alphaMax: document.getElementById('alphaMax').value
 }
 
 let currentFilePath = null
@@ -19,16 +20,14 @@ function convertToSvg (filepath) {
   if (converting) return console.log('conversion in progress')
   converting = true
   currentFilePath = filepath
-  const Potrace = require('potrace')
-  Potrace.setParameter(conf)
+  const Potrace = new potrace.Potrace()
+  Potrace.setParameters(conf)
   Potrace.loadImage(filepath, function(err) {
     if (err) return console.error(err)
-    Potrace.process(function(){
-      currentSvg = Potrace.getSVG(SVG_SCALE)
-      document.getElementById('svgs').innerHTML = currentSvg
-      console.log('redrawn')
-      converting = false
-    })
+    currentSvg = Potrace.getSVG(SVG_SCALE)
+    document.getElementById('svgs').innerHTML = currentSvg
+    console.log('redrawn')
+    converting = false
   })
 }
 
@@ -73,6 +72,6 @@ function saveFile () {
 var dropZone = document.getElementById('drop_zone');
 dropZone.addEventListener('dragover', handleDragOver, false);
 dropZone.addEventListener('drop', handleFileSelect, false);
-['turdsize', 'alphamax', 'blacklevel'].map(
+['turdSize', 'alphaMax', 'threshold'].map(
   id => document.getElementById(id).addEventListener('change', changeConfig)
 )

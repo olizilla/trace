@@ -1,7 +1,7 @@
 {
   "name": "trace",
   "version": "1.0.0",
-  "productName":"T R A C E",
+  "productName": "T R A C E",
   "description": "automagically trace an image to an svg",
   "main": "main.js",
   "scripts": {
@@ -39,6 +39,6 @@
     "postcss-import": "^8.0.2"
   },
   "dependencies": {
-    "potrace": "tooolbox/node-potrace"
+    "potrace": "^2.1.1"
   }
 }

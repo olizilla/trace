@@ -1,6 +1,6 @@
-var fs = require('fs')
-const {dialog} = require('electron').remote
+const { ipcRenderer } = require('electron')
 const potrace = require('potrace')
+const fs = require('fs')
 
 // This file is required by the index.html file and will
 // be executed in the renderer process for that window.
@@ -21,6 +21,7 @@ function convertToSvg (filepath) {
   converting = true
   currentFilePath = filepath
   const Potrace = new potrace.Potrace()
+  console.log('loading', filepath)
   Potrace.setParameters(conf)
   Potrace.loadImage(filepath, function(err) {
     if (err) return console.error(err)
@@ -59,12 +60,12 @@ function changeConfig (evt) {
   convertToSvg(currentFilePath)
 }
 
-function saveFile () {
-  dialog.showSaveDialog(function (fileName) {
-    if (fileName === undefined) return;
-    fs.writeFile(fileName, currentSvg, function (err) {
-      if (err) console.error(err)
-    })
+async function saveFile () {
+  const { filePath } = await ipcRenderer.invoke('save-file')
+  console.log('save', filePath)
+  if (filePath === undefined) return;
+  fs.writeFile(filePath, currentSvg, function (err) {
+    if (err) console.error(err)
   })
 }
 

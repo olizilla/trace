@@ -31,3 +31,6 @@ svg {
 h1 {
   bottom: 8px;
 }
+.help {
+  cursor: pointer;
+}

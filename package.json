@@ -27,7 +27,7 @@
     "basscss-basic": "^1.0.0",
     "colors.css": "^3.0.0",
     "cssnano": "^3.4.0",
-    "electron": "^10.1.5",
+    "electron": "^15.5.5",
     "nodemon": "^1.10.0",
     "postcss": "^5.0.14",
     "postcss-calc": "^5.2.0",

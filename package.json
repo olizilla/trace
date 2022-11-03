@@ -31,7 +31,7 @@
     "nodemon": "^1.10.0",
     "postcss": "^5.0.14",
     "postcss-calc": "^5.2.0",
-    "postcss-cli": "^2.4.0",
+    "postcss-cli": "^2.6.0",
     "postcss-color-function": "^2.0.0",
     "postcss-custom-media": "^5.0.0",
     "postcss-custom-properties": "^5.0.0",
